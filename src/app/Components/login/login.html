@@ -1,0 +1,53 @@
+<div class="page">
+  <mat-card class="login-card">
+    <img
+      src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
+      alt="Google"
+      class="google-logo"
+    />
+
+    <h2 class="title">Login</h2>
+    <p class="subtitle">Use your Google account</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <input
+        type="email"
+        placeholder="Email"
+        formControlName="email"
+        class="input"
+      />
+      <small
+        class="error"
+        *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+        Enter a valid email
+      </small>
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+        class="input"
+      />
+      <small
+        class="error"
+        *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+        Password is required
+      </small>
+
+      <div class="actions">
+        <div class="links">
+          <a href="#">Forgot password?</a>
+          <a routerLink="/register">Create account</a>
+        </div>
+
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="loginForm.invalid">
+          Login
+        </button>
+      </div>
+
+    </form>
+
+  </mat-card>
+</div>

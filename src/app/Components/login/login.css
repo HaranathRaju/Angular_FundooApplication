@@ -1,0 +1,93 @@
+/* Full page center */
+.page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-card {
+  width: 450px;
+  height: 450px;
+  padding: 55px 45px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3),
+              0 4px 8px rgba(60, 64, 67, 0.15);
+}
+
+.google-logo {
+  display: block;
+  margin: 0 auto 20px;
+  height: 32px;
+}
+
+.title {
+  text-align: center;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #5f6368;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 12px;
+  margin-bottom: 20px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: none;
+  border: 2px solid #1a73e8;
+}
+
+.input.ng-touched.ng-invalid {
+  border: 2px solid #d93025;
+}
+
+.error {
+  color: #d93025;
+  font-size: 12px;
+  margin-top: -12px;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.links a {
+  font-size: 14px;
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+button[mat-raised-button] {
+  padding: 6px 24px;
+  background-color: #1a73e8;
+  color: white;
+  border-radius: 4px;
+}

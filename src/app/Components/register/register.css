@@ -1,0 +1,110 @@
+.page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.register-card {
+  width: 900px;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3),
+              0 4px 8px rgba(60, 64, 67, 0.15);
+}
+
+.content {
+  display: flex;
+  gap: 60px;
+}
+
+.left {
+  flex: 1;
+}
+
+.google-logo {
+  height: 32px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;  
+}
+
+.input {
+  width: 100%;
+  padding: 14px 12px;
+  margin-bottom: 12px;  
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.half {
+  width: 50%;
+}
+
+.input:focus {
+  outline: none;
+  border: 2px solid #1a73e8;
+}
+
+.hint {
+  font-size: 12px;
+  color: #5f6368;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.checkbox {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.actions a:hover {
+  text-decoration: underline;
+}
+
+button[mat-raised-button] {
+  background-color: #1a73e8;
+  color: white;
+  padding: 6px 24px;
+}
+
+.right {
+  flex: 1;
+  text-align: center;
+}
+
+.right img {
+  width: 220px;
+  margin-bottom: 16px;
+}
+
+.right p {
+  font-size: 14px;
+  color: #5f6368;
+}
