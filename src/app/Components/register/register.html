@@ -11,30 +11,66 @@
 
         <h2 class="title">Create your Google Account</h2>
 
-        <div class="row">
-          <input class="input half" placeholder="First name" />
-          <input class="input half" placeholder="Last name" />
-        </div>
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
 
-        <input class="input" placeholder="Username" />
-        <small class="hint">You can use letters, numbers & periods</small>
+          <div class="row">
+            <input
+              class="input half"
+              placeholder="First name"
+              formControlName="firstName"
+            />
+            <input
+              class="input half"
+              placeholder="Last name"
+              formControlName="lastName"
+            />
+          </div>
 
-        <div class="row">
-          <input class="input half" placeholder="Password" />
-          <input class="input half" placeholder="Confirm" />
-        </div>
+          <input
+            class="input"
+            placeholder="Username"
+            formControlName="username"
+          />
+          <small class="hint">You can use letters, numbers & periods</small>
 
-        <div class="checkbox">
-          <input type="checkbox" />
-          <span>Show password</span>
-        </div>
+          <div class="row">
+            <input
+              class="input half"
+              placeholder="Password"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+            />
+            <input
+              class="input half"
+              placeholder="Confirm"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="confirmPassword"
+            />
+          </div>
 
-        <div class="actions">
-          <a routerLink="/login">Login</a>
-          <button mat-raised-button>Next</button>
-        </div>
+          <!-- Show / Hide Password -->
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              (change)="togglePassword()"
+            />
+            <span>{{ showPassword ? 'Hide password' : 'Show password' }}</span>
+          </div>
+
+          <div class="actions">
+            <a routerLink="/login">Login</a>
+            <button
+              mat-raised-button
+              type="submit"
+              [disabled]="registerForm.invalid">
+              Next
+            </button>
+          </div>
+
+        </form>
 
       </div>
+
       <div class="right">
         <img
           src="https://ssl.gstatic.com/accounts/signup/glif/account.svg"

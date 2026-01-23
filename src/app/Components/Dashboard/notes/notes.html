@@ -1,0 +1,105 @@
+<!-- OVERLAY -->
+<div class="overlay" *ngIf="isExpanded" (click)="closeNote()"></div>
+
+<div class="notes-wrapper">
+  <!-- COLLAPSED -->
+  <div
+    class="note-collapsed"
+    *ngIf="!isExpanded"
+    (click)="expandNote()">
+    <span class="placeholder">Take a note...</span>
+    <div class="collapsed-icons">
+      <mat-icon>check_box</mat-icon>
+      <mat-icon>brush</mat-icon>
+      <mat-icon>image</mat-icon>
+    </div>
+  </div>
+
+  <!-- EXPANDED -->
+  <div
+    class="note-expanded"
+    *ngIf="isExpanded"
+    [style.backgroundColor]="colorMap[note.colour || 'White']"
+    (click)="$event.stopPropagation()">
+
+    <!-- HEADER -->
+    <div class="note-header">
+      <input
+        class="title-input"
+        placeholder="Title"
+        [(ngModel)]="note.title" />
+
+      <button class="icon-btn" (click)="togglePin()">
+        <mat-icon>push_pin</mat-icon>
+      </button>
+    </div>
+
+    <!-- BODY -->
+    <textarea
+      class="description-input"
+      placeholder="Take a note..."
+      [(ngModel)]="note.description"></textarea>
+
+    <!-- ACTION BAR -->
+    <div class="actions">
+      <div class="icons">
+        <button class="icon-btn">
+          <mat-icon>notifications</mat-icon>
+        </button>
+
+        <button class="icon-btn">
+          <mat-icon>person_add</mat-icon>
+        </button>
+
+        <!-- COLOR PICKER -->
+        <div class="color-wrapper">
+          <button class="icon-btn" (click)="toggleColorPicker()">
+            <mat-icon>palette</mat-icon>
+          </button>
+
+          <div class="color-palette" *ngIf="showColors">
+            <span
+              *ngFor="let c of colors"
+              class="color-circle"
+              [style.backgroundColor]="c"
+              (click)="setColor(c)">
+            </span>
+          </div>
+        </div>
+
+        <button class="icon-btn">
+          <mat-icon>image</mat-icon>
+        </button>
+
+        <button class="icon-btn" (click)="toggleArchive()">
+          <mat-icon>archive</mat-icon>
+        </button>
+
+        <!-- MORE -->
+        <div class="more-wrapper">
+          <button class="icon-btn" (click)="toggleMore()">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <div class="more-menu" *ngIf="showMore">
+            <div class="menu-item">Add label</div>
+            <div class="menu-item">Add drawing</div>
+            <div class="menu-item">Show checkboxes</div>
+          </div>
+        </div>
+
+        <button class="icon-btn" [disabled]="!canUndo">
+          <mat-icon>undo</mat-icon>
+        </button>
+
+        <button class="icon-btn" [disabled]="!canRedo">
+          <mat-icon>redo</mat-icon>
+        </button>
+      </div>
+
+      <button class="close-btn" (click)="closeNote()">Close</button>
+    </div>
+  </div>
+</div>
+
+<app-notes-list></app-notes-list>

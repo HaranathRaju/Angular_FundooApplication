@@ -1,0 +1,182 @@
+/* OVERLAY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+}
+
+/* WRAPPER */
+.notes-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 32px;
+  position: relative;
+  z-index: 20;
+}
+
+/* COLLAPSED */
+.note-collapsed {
+  width: 600px;
+  height: 46px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: text;
+}
+
+.placeholder {
+  color: #5f6368;
+}
+
+.collapsed-icons mat-icon {
+  font-size: 20px;
+  margin-left: 12px;
+  color: #5f6368;
+}
+
+/* EXPANDED */
+.note-expanded {
+  width: 600px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  padding: 12px 16px;
+}
+
+/* HEADER */
+.note-header {
+  display: flex;
+  align-items: center;
+}
+
+/* INPUTS INHERIT COLOR */
+.title-input,
+.description-input {
+  background: transparent;
+  color: #202124;
+}
+
+/* TITLE */
+.title-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* BODY */
+.description-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 14px;
+  margin-top: 6px;
+  min-height: 60px;
+}
+
+/* PLACEHOLDER COLOR */
+.title-input::placeholder,
+.description-input::placeholder {
+  color: #5f6368;
+}
+
+/* ACTION BAR */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ICON BUTTON */
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.icon-btn:disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* CLOSE */
+.close-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* COLOR PICKER */
+.color-wrapper {
+  position: relative;
+}
+
+.color-palette {
+  position: absolute;
+  bottom: 42px;
+  left: 0;
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: repeat(5, 24px);
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  z-index: 50;
+}
+
+.color-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #ddd;
+}
+
+/* MORE MENU */
+.more-wrapper {
+  position: relative;
+}
+
+.more-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: #fff;
+  width: 160px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  z-index: 50;
+}
+
+.menu-item {
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: #f1f3f4;
+}

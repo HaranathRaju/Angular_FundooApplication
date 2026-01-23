@@ -9,7 +9,9 @@ import {
 } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { UserService } from '../../Services/user/user';
+import { PopupService } from '../../Services/shared/popup';
 
 @Component({
   selector: 'app-register',
@@ -29,14 +31,19 @@ export class Register {
   showPassword = false;
   registerForm: any;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService, 
+    private popup: PopupService,      
+    private router: Router            
+  ) {
     this.registerForm = this.fb.group(
       {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
-        username: ['', Validators.required],
+        username: ['', [Validators.required, Validators.email]], 
         password: ['', [Validators.required, Validators.minLength(8)]],
-        confirmPassword: ['', Validators.required]
+        confirmPassword: ['', Validators.required] 
       },
       { validators: this.passwordMatchValidator }
     );
@@ -49,13 +56,38 @@ export class Register {
   }
 
   togglePassword() {
-    this.showPassword = !this.showPassword;
+  this.showPassword = !this.showPassword;
+  console.log('showPassword:', this.showPassword);
   }
 
   onRegister() {
     if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched(); 
       return;
-    } 
-    console.log(this.registerForm.value);
+    }
+
+    const payload = {
+      firstName: this.registerForm.value.firstName,
+      lastName: this.registerForm.value.lastName,
+      email: this.registerForm.value.username, 
+      password: this.registerForm.value.password
+    };
+
+    this.userService.register(payload).subscribe({
+      next: (res: any) => {
+    
+        this.popup.success(res.message || 'Registered successfully', 'Success');
+
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        const message =
+          err?.error?.message ||
+          err?.error?.Message ||
+          'Server error. Please try again';
+
+        this.popup.error(message, 'Error');
+      }
+    });
   }
 }
