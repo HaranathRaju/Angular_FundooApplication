@@ -83,7 +83,6 @@ export class NotesList implements OnInit {
     });
   }
 
-
   setHover(noteId: number | undefined) {
     this.hoveredNoteId = noteId;
   }

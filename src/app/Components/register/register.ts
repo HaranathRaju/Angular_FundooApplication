@@ -32,22 +32,26 @@ export class Register {
   registerForm: any;
 
   constructor(
-    private fb: FormBuilder,
-    private userService: UserService, 
-    private popup: PopupService,      
-    private router: Router            
-  ) {
-    this.registerForm = this.fb.group(
-      {
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        username: ['', [Validators.required, Validators.email]], 
-        password: ['', [Validators.required, Validators.minLength(8)]],
-        confirmPassword: ['', Validators.required] 
-      },
-      { validators: this.passwordMatchValidator }
-    );
+  private fb: FormBuilder,
+  private userService: UserService,
+  private popup: PopupService,
+  private router: Router
+  ) { 
+
   }
+
+  ngOnInit(): void {
+  this.registerForm = this.fb.group(
+    {
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', Validators.required]
+    },
+    { validators: this.passwordMatchValidator }
+    );
+  } 
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
@@ -75,9 +79,8 @@ export class Register {
 
     this.userService.register(payload).subscribe({
       next: (res: any) => {
-    
+  
         this.popup.success(res.message || 'Registered successfully', 'Success');
-
         this.router.navigate(['/login']);
       },
       error: (err) => {

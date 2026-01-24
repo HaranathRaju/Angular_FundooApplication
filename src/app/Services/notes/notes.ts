@@ -19,7 +19,6 @@ export class NotesService {
   }
 
 
-
   displayNotes() {
     const header = {
       headers: new HttpHeaders({

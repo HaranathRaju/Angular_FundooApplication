@@ -31,8 +31,8 @@ export class Login implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      Email: ['', [Validators.required, Validators.email]],
+      Password: ['', [Validators.required]]
     });
   }
 
@@ -53,9 +53,7 @@ export class Login implements OnInit {
           localStorage.setItem('token', res.data);
           this.popup.success(res.message, 'Success');
           this.router.navigate(['/dashboard/notes']);
-        } else {
-          this.popup.error(res.message, 'Failed');
-        }
+        } 
       },
       error: (err) => {
         const message =

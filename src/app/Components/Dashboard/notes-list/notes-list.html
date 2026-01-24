@@ -6,14 +6,13 @@
     [style.background]="colorMap[note.colour || 'White']"
     (click)="openNote(note)">
 
-    <!-- PIN -->
     <button
       class="pin-btn"
       (click)="$event.stopPropagation()">
       <mat-icon>push_pin</mat-icon>
     </button>
 
-    <!-- CONTENT -->
+
     <div class="note-content">
       <div class="note-title" *ngIf="note.title">
         {{ note.title }}
@@ -24,7 +23,7 @@
       </div>
     </div>
 
-    <!-- ACTIONS (HOVER ONLY) -->
+
     <div
       class="note-actions"
       (click)="$event.stopPropagation()">

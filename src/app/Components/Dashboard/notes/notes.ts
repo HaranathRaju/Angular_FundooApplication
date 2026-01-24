@@ -49,13 +49,10 @@ colors = Object.keys(this.colorMap);
 
 
 
-
-  /* ---------- NOTE MODEL ---------- */
   note: Note = this.getEmptyNote();
 
   constructor(private notesService: NotesService) {}
 
-  /* ---------- GETTERS ---------- */
   get canUndo(): boolean {
     return this.undoStack.length > 0;
   }
@@ -64,7 +61,6 @@ colors = Object.keys(this.colorMap);
     return this.redoStack.length > 0;
   }
 
-  /* ---------- UI ACTIONS ---------- */
   expandNote() {
     this.isExpanded = true;
   }
@@ -100,10 +96,9 @@ colors = Object.keys(this.colorMap);
   }
 
  setColor(colorName: string) {
-  this.note.colour = colorName;   // store NAME
+  this.note.colour = colorName;  
   this.showColors = false;
 }
-  /* ---------- UNDO / REDO ---------- */
   onChange() {
     this.saveState();
   }
@@ -127,7 +122,6 @@ colors = Object.keys(this.colorMap);
     this.note = this.redoStack.pop()!;
   }
 
-  /* ---------- BACKEND ---------- */
   private createNote() {
     const formData = new FormData();
 
@@ -149,7 +143,6 @@ colors = Object.keys(this.colorMap);
     });
   }
 
-  /* ---------- RESET ---------- */
   private resetNote() {
     this.note = this.getEmptyNote();
     this.isExpanded = false;

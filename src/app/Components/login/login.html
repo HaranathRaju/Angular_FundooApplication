@@ -13,30 +13,30 @@
       <input
         type="email"
         placeholder="Email"
-        formControlName="email"
+        formControlName="Email"
         class="input"
         
       />
       <small
         class="error"
-        *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+        *ngIf="loginForm.get('Email')?.touched && loginForm.get('Email')?.invalid">
         Enter a valid email
       </small>
       <input
         type="password"
         placeholder="Password"
-        formControlName="password"
+        formControlName="Password"
         class="input"
       />
       <small
         class="error"
-        *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+        *ngIf="loginForm.get('Password')?.touched && loginForm.get('Password')?.invalid">
         Password is required
       </small>
 
       <div class="actions">
         <div class="links">
-          <a href="#">Forgot password?</a>
+          <a routerLink="/forgetpassword">Forgot password?</a>
           <a routerLink="/register">Create account</a>
         </div>
 

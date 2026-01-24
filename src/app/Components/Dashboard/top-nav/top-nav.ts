@@ -24,8 +24,6 @@ export class TopNavComponent {
   }
 
    search(event:any){
-    // console.log(event.target.value)
-    // this.data.outGoingData(event.target.value)
   }
 
 }

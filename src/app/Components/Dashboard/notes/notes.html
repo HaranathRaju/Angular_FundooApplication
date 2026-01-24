@@ -1,8 +1,8 @@
-<!-- OVERLAY -->
+
 <div class="overlay" *ngIf="isExpanded" (click)="closeNote()"></div>
 
 <div class="notes-wrapper">
-  <!-- COLLAPSED -->
+
   <div
     class="note-collapsed"
     *ngIf="!isExpanded"
@@ -15,14 +15,12 @@
     </div>
   </div>
 
-  <!-- EXPANDED -->
   <div
     class="note-expanded"
     *ngIf="isExpanded"
     [style.backgroundColor]="colorMap[note.colour || 'White']"
     (click)="$event.stopPropagation()">
 
-    <!-- HEADER -->
     <div class="note-header">
       <input
         class="title-input"
@@ -34,13 +32,11 @@
       </button>
     </div>
 
-    <!-- BODY -->
     <textarea
       class="description-input"
       placeholder="Take a note..."
       [(ngModel)]="note.description"></textarea>
 
-    <!-- ACTION BAR -->
     <div class="actions">
       <div class="icons">
         <button class="icon-btn">
@@ -51,7 +47,7 @@
           <mat-icon>person_add</mat-icon>
         </button>
 
-        <!-- COLOR PICKER -->
+
         <div class="color-wrapper">
           <button class="icon-btn" (click)="toggleColorPicker()">
             <mat-icon>palette</mat-icon>
@@ -75,7 +71,6 @@
           <mat-icon>archive</mat-icon>
         </button>
 
-        <!-- MORE -->
         <div class="more-wrapper">
           <button class="icon-btn" (click)="toggleMore()">
             <mat-icon>more_vert</mat-icon>

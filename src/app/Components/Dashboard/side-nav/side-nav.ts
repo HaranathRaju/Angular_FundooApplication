@@ -21,7 +21,6 @@ export class SideNavComponent {
     
   openEditLabels() {
     console.log('Edit labels clicked');
-    // later → open dialog
   }
 
 
