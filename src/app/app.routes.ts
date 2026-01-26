@@ -5,6 +5,7 @@ import { DashboardComponent } from './Components/Dashboard/dashboard/dashboard';
 import { NotesComponent } from './Components/Dashboard/notes/notes';
 import { ForgetPasswordComponent } from './Components/forgetpassword/forgetpassword';
 import { ResetPasswordComponent } from './Components/resetpassword/resetpassword';
+import { AuthGuard } from './Services/authguard/authguard';
 
 
 export const routes: Routes = [
@@ -14,6 +15,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard],
     children: [
      { path: 'notes', component: NotesComponent },
       { path: '', redirectTo: 'notes', pathMatch: 'full' },
