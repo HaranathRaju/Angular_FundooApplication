@@ -9,12 +9,31 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./note-edit-dialog.css'],
   imports: [MatIconModule,FormsModule]
 })
-export class NoteEditDialog {
+export class NoteEditDialogComponent {
+
+  colorMap: Record<string, string> = {
+    White: '#ffffff',
+    Red: '#f28b82',
+    Orange: '#fbbc04',
+    Yellow: '#fff475',
+    Green: '#ccff90',
+    Teal: '#a7ffeb',
+    Blue: '#cbf0f8',
+    DarkBlue: '#aecbfa',
+    Purple: '#d7aefb',
+    Pink: '#fdcfe8',
+    Brown: '#e6c9a8',
+    Gray: '#e8eaed'
+  };
 
   constructor(
-    public dialogRef: MatDialogRef<NoteEditDialog>,
+    public dialogRef: MatDialogRef<NoteEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public note: any
   ) {}
+
+  getBgColor(): string {
+    return this.colorMap[this.note.colour || 'White'] || '#fff';
+  }
 
   close() {
     this.dialogRef.close(this.note);

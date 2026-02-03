@@ -2,9 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { NotesListComponent } from '../notes-list/notes-list';
+import { Label } from './Models/LabelModel';
 import { Note } from './Models/NotesModel';
-import { NotesList } from '../notes-list/notes-list';
 import { NotesService } from '../../../Services/notes/notes';
+import { LabelService } from '../../../Services/labels/label';
+
+
 
 @Component({
   selector: 'app-notes',
@@ -15,43 +19,80 @@ import { NotesService } from '../../../Services/notes/notes';
     CommonModule,
     FormsModule,
     MatIconModule,
-    NotesList
+    NotesListComponent
   ]
 })
 export class NotesComponent {
 
-  /* ---------- UI STATE ---------- */
+  ngOnInit() {
+    this.getAllLabels();
+  }
+
+  getAllLabels() {
+    this.labelService.getLabels().subscribe({
+      next: (res: any) => {
+        console.log(res);
+
+        this.allLabels = res.data.map((label: any) => ({
+          id: label.labelId,
+          name: label.labelName
+        }));
+
+        this.filteredLabels = [...this.allLabels];
+      }
+    });
+  }
+
+
+
+
+  allLabels: Label[] = [];
+  filteredLabels: Label[] = [];
+  labelSearch = '';
+
   isExpanded = false;
   showColors = false;
   showMore = false;
 
-  /* ---------- UNDO / REDO ---------- */
   undoStack: Note[] = [];
   redoStack: Note[] = [];
 
-  /* ---------- COLORS ---------- */
- colorMap: Record<string, string> = {
-  White: '#ffffff',
-  Red: '#f28b82',
-  Orange: '#fbbc04',
-  Yellow: '#fff475',
-  Green: '#ccff90',
-  Teal: '#a7ffeb',
-  Blue: '#cbf0f8',
-  DarkBlue: '#aecbfa',
-  Purple: '#d7aefb',
-  Pink: '#fdcfe8',
-  Brown: '#e6c9a8',
-  Gray: '#e8eaed'
-};
 
-colors = Object.keys(this.colorMap);
+  showLabelPopup = false;
+  labelName = '';
+
+  showCollaboratorPopup = false;
+  collaboratorEmail = '';
+  userEmail = localStorage.getItem('email'); // or from token
+
+  colorMap: Record<string, string> = {
+    White: '#ffffff',
+    Red: '#f28b82',
+    Orange: '#fbbc04',
+    Yellow: '#fff475',
+    Green: '#ccff90',
+    Teal: '#a7ffeb',
+    Blue: '#cbf0f8',
+    DarkBlue: '#aecbfa',
+    Purple: '#d7aefb',
+    Pink: '#fdcfe8',
+    Brown: '#e6c9a8',
+    Gray: '#e8eaed'
+  };
 
 
+
+
+  colors = Object.keys(this.colorMap);
 
   note: Note = this.getEmptyNote();
 
-  constructor(private notesService: NotesService) {}
+  constructor(private notesService: NotesService, private labelService: LabelService
+    
+  ) { }
+
+
+
 
   get canUndo(): boolean {
     return this.undoStack.length > 0;
@@ -68,6 +109,7 @@ colors = Object.keys(this.colorMap);
   closeNote() {
     this.showColors = false;
     this.showMore = false;
+    this.showLabelPopup = false;
 
     if (!this.note.title?.trim() && !this.note.description?.trim()) {
       this.resetNote();
@@ -76,6 +118,7 @@ colors = Object.keys(this.colorMap);
 
     this.createNote();
   }
+
 
   togglePin() {
     this.note.isPinned = !this.note.isPinned;
@@ -95,10 +138,10 @@ colors = Object.keys(this.colorMap);
     this.showColors = false;
   }
 
- setColor(colorName: string) {
-  this.note.colour = colorName;  
-  this.showColors = false;
-}
+  setColor(colorName: string) {
+    this.note.colour = colorName;
+    this.showColors = false;
+  }
   onChange() {
     this.saveState();
   }
@@ -122,6 +165,7 @@ colors = Object.keys(this.colorMap);
     this.note = this.redoStack.pop()!;
   }
 
+  /* ---------- BACKEND ---------- */
   private createNote() {
     const formData = new FormData();
 
@@ -164,4 +208,88 @@ colors = Object.keys(this.colorMap);
       labels: []
     };
   }
+
+  openLabelPopup(event: MouseEvent) {
+    event.stopPropagation();
+    this.showMore = false;
+    this.showLabelPopup = true;
+    this.filteredLabels = this.allLabels;
+  }
+
+
+
+
+  onLabelSearch() {
+    const value = this.labelSearch.toLowerCase();
+    this.filteredLabels = this.allLabels.filter(label =>
+      label.name.toLowerCase().includes(value)
+    );
+  }
+
+
+  toggleLabel(labelName: string) {
+    if (!this.note.labels) {
+      this.note.labels = [];
+    }
+
+    const index = this.note.labels.indexOf(labelName);
+
+    if (index > -1) {
+      this.note.labels.splice(index, 1);
+    } else {
+      this.note.labels.push(labelName);
+    }
+  }
+
+
+  addLabel() {
+    const name = this.labelSearch.trim();
+    if (!name) return;
+
+    const existing = this.allLabels.find(
+      l => l.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (existing) {
+      this.toggleLabel(existing.name);
+      return;
+    }
+
+    this.labelService.createLabel(name).subscribe(res => {
+      const newLabel = {
+        id: res.data.labelId,
+        name: res.data.labelName
+      };
+
+      this.allLabels.push(newLabel);
+      this.note.labels.push(newLabel.name); // UI only
+    });
+  }
+
+
+
+  attachLabelToNote(label: Label) {
+
+    if (!this.note.labels) {
+      this.note.labels = [];
+    }
+
+    // Avoid duplicates
+    if (this.note.labels.includes(label.name)) return;
+
+    this.note.labels.push(label.name);
+
+    // If note already exists → persist relation
+    if (this.note.noteId) {
+      this.labelService.addLabelToNote(this.note.noteId, label.id).subscribe();
+    }
+  }
+
+
+  labelExists(name: string): boolean {
+    return this.allLabels.some(
+      l => l.name.toLowerCase() === name.toLowerCase()
+    );
+  }
+
 }

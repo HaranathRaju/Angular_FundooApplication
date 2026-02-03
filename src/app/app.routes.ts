@@ -17,8 +17,8 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard],
     children: [
-     { path: 'notes', component: NotesComponent },
-      { path: '', redirectTo: 'notes', pathMatch: 'full' },
+    { path: 'notes', component: NotesComponent },
+    { path: '', redirectTo: 'notes', pathMatch: 'full' },
     ]
   },
   {path : 'forgetpassword' ,component : ForgetPasswordComponent},

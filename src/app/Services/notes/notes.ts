@@ -1,33 +1,30 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 import { HttpService } from '../http/http';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotesService {
 
+  private url="https://localhost:7139/api/Notes";
+
   constructor(private http: HttpService) { }
 
-  createNotes(data: FormData) {
+  createNotes(data: any) {
     return this.http.postMethod(
-      'https://localhost:7224/api/Notes/notes',
+      `${this.url}/Create`,
       data,
       true
     );
   }
 
-
   displayNotes() {
-    const header = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
     return this.http.getMethod(
-      'https://localhost:7224/api/Notes/getNotes', true);
+      `${this.url}/Display`,
+      true
+    );
   }
 
   private refreshSource = new Subject<void>();
@@ -37,11 +34,20 @@ export class NotesService {
     this.refreshSource.next();
   }
 
-  updateNotes(data: FormData, noteId: number) {
+  updateNotes(data: any) {
     return this.http.putMethod(
-      `https://localhost:7224/api/Notes/updateNotes?noteId=${noteId}`,
-      data
+    
+      `${this.url}/Update`,
+      data,
+      true
     );
 
+  }
+
+  deleteNote(id: string) {
+    return this.http.deleteMethod(
+      `${this.url}/${id}`,
+      true
+    );
   }
 }

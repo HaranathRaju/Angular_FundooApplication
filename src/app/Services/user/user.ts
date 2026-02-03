@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
 import { HttpService } from '../http/http';
 
 @Injectable({
@@ -7,51 +6,42 @@ import { HttpService } from '../http/http';
 })
 export class UserService {
 
-  constructor(private httpService: HttpService) { }
+  private baseUrl = 'https://localhost:7139/api/User';
+
+  constructor(private httpService: HttpService) {}
 
   login(data: any) {
-    const header = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
     return this.httpService.postMethod(
-      'https://localhost:7139/api/User/Login', data, false
-    );
-  }
-
-  register(data: any) {
-    const header = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
-    return this.httpService.postMethod(
-      'https://localhost:7139/api/User/Register', data, false
-    );
-  }
-
-  forgetPassword(data: { email: string }) {
-    const header = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
-    return this.httpService.postMethod(
-      'https://localhost:7139/api/User/ForgetPassword', 
+      `${this.baseUrl}/Login`,
       data,
       false
     );
   }
-  resetPassword(newpassword: string, confirmpassword: string) {
+
+  register(data: any) {
     return this.httpService.postMethod(
-      `https://localhost:7139/api/User/ResetPassword?newpassword=${newpassword}&confirmpassword=${confirmpassword}`,
-      {},
-      true
+      `${this.baseUrl}/Register`,
+      data,
+      false
     );
   }
 
+  forgetPassword(data: { email: string }) {
+    return this.httpService.postMethod(
+      `${this.baseUrl}/ForgetPassword`,
+      data,
+      false
+    );
+  }
+
+  resetPassword(password: string, confirmPassword: string) {
+  return this.httpService.postMethod(
+    'https://localhost:7139/api/User/ResetPassword',
+    {
+      password: password,
+      confirmPassword: confirmPassword
+    },
+    true
+  );
+}
 }

@@ -25,9 +25,9 @@ export class HttpService {
     };
   }
 
-  postMethod(url: string, reqData: any, token: boolean = false) {
-    const isFormData = reqData instanceof FormData;
-    return this.http.post(url, reqData, this.createOptions(token, isFormData));
+  postMethod<T>(url: string, reqData: any, token: boolean = false) {
+  const isFormData = reqData instanceof FormData;
+  return this.http.post<T>(url, reqData, this.createOptions(token, isFormData));
   }
 
   getMethod(url: string, token: boolean = false) {
